@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Sse</title>
+</head>
+<body>
+<div>chat</div>
+<div id="data"></div>
+</body>
+</html>
+<script>
+  // var source = new EventSource('http://localhost:9999/sse/createConnect?clientId=ddz');
+  var source = new EventSource('http://localhost:9999/sse/chat?msg=你好');
+  source.onmessage = function (event) {
+    text = document.getElementById('data').innerText;
+    let data = JSON.parse(event.data)
+    text += data.data;
+    document.getElementById('data').innerText = text;
+  };
+  <!-- 添加一个开启回调 -->
+  source.onopen = function (event) {
+    console.log("open")
+    text = document.getElementById('data').innerText;
+    text += '\n open: ';
+    console.log(event);
+    document.getElementById('data').innerText = text;
+  };
+</script>
+

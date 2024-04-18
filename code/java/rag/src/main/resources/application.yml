@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: rag
+  ai:
+    vectorstore:
+      qdrant:
+        host: localhost
+        port: 6334
+        collection-name: test
+        api-key:
+#    embedding:
+#      transformer:
+#        onnx:
+#          model-uri: https://huggingface.co/intfloat/e5-small-v2/resolve/main/model.onnx
+#        tokenizer:
+#          uri: https://huggingface.co/intfloat/e5-small-v2/raw/main/tokenizer.json
+server:
+  port: 9999
