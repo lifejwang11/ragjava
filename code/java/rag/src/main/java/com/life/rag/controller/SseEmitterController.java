@@ -1,6 +1,7 @@
 package com.life.rag.controller;
 
 import com.life.rag.entity.MessageVo;
+import com.life.rag.entity.RequestDto;
 import com.life.rag.service.SseEmitterService;
 import jakarta.annotation.Resource;
 import org.springframework.ai.document.Document;
@@ -26,11 +27,11 @@ public class SseEmitterController {
     VectorStore vectorStore;
 
     @CrossOrigin
-    @GetMapping("chat")
-    public SseEmitter test(String msg) {
+    @PostMapping("chat")
+    public SseEmitter test(@RequestBody RequestDto requestDto) {
         SseEmitter sseEmitter =sseEmitterService.createConnect("test");
-        List<Document> results = vectorStore.similaritySearch(SearchRequest.query(msg).withTopK(3));
-        new Thread(() -> sseEmitterService.clientCall("test",msg,results)).start();
+        List<Document> results = vectorStore.similaritySearch(SearchRequest.query(requestDto.getContent()).withTopK(3));
+        new Thread(() -> sseEmitterService.clientCall("test",requestDto.getContent(),results)).start();
         return sseEmitter;
     }
 
